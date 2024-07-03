@@ -1,0 +1,55 @@
+def caesar_cipher_encrypt(text, shift):
+    encrypted_text = ""
+    for char in text:
+        if char.isalpha():  # check if the character is a letter
+            if char.islower():
+                encrypted_text += chr((ord(char) - ord('a') + shift) % 26 + ord('a'))
+            elif char.isupper():
+                encrypted_text += chr((ord(char) - ord('A') + shift) % 26 + ord('A'))
+        else:
+            encrypted_text += char  # keep any non-alphabetical characters unchanged
+    return encrypted_text
+
+def caesar_cipher_decrypt(text, shift):
+    decrypted_text = ""
+    for char in text:
+        if char.isalpha():  # check if the character is a letter
+            if char.islower():
+                decrypted_text += chr((ord(char) - ord('a') - shift) % 26 + ord('a'))
+            elif char.isupper():
+                decrypted_text += chr((ord(char) - ord('A') - shift) % 26 + ord('A'))
+        else:
+            decrypted_text += char  # keep any non-alphabetical characters unchanged
+    return decrypted_text
+
+def main():
+    while True:
+        choice = input("Do you want to encrypt (E) or decrypt (D) a message? (E/D): ").strip().upper()
+        if choice not in ['E', 'D']:
+            print("Invalid choice. Please enter E or D.")
+            continue
+        
+        message = input("Enter your message: ").strip()
+        try:
+            shift = int(input("Enter the shift value (a positive integer): ").strip())
+            if shift < 0:
+                print("Shift value must be a positive integer.")
+                continue
+        except ValueError:
+            print("Shift value must be a positive integer.")
+            continue
+        
+        if choice == 'E':
+            encrypted_message = caesar_cipher_encrypt(message, shift)
+            print(f"Encrypted message: {encrypted_message}")
+        elif choice == 'D':
+            decrypted_message = caesar_cipher_decrypt(message, shift)
+            print(f"Decrypted message: {decrypted_message}")
+        
+        another = input("Do you want to encrypt/decrypt another message? (yes/no): ").strip().lower()
+        if another != 'yes':
+            print("Exiting program...")
+            break
+
+if __name__ == "__main__":
+    main()
